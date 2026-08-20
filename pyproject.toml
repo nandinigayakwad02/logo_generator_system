@@ -1,0 +1,16 @@
+[project]
+name = "logo-generator-system"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "fal-client>=1.0.0",
+    "fastapi>=0.141.1",
+    "google-genai>=2.18.1",
+    "httpx>=0.28.1",
+    "load-dotenv>=0.1.0",
+    "openai>=3.3.0",
+    "pydantic>=2.13.4",
+    "uvicorn>=0.52.3",
+]

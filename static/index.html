@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LogoCraft AI — Next-Gen AI Logo Generator</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header / Navbar -->
+    <header class="app-header">
+      <div class="logo-brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+        </div>
+        <div class="brand-text">
+          <h1>LogoCraft <span>AI</span></h1>
+          <p>OpenAI GPT-4 & GPT Image Powered Studio</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <button id="viewHistoryBtn" class="btn btn-glass">
+          <i class="fa-solid fa-clock-rotate-left"></i> My Creations <span id="historyBadge" class="badge">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Grid Workspace -->
+    <main class="workspace-grid">
+      <!-- Left Panel: Input & Settings Form -->
+      <section class="control-panel glass-card">
+        <div class="panel-header">
+          <h2><i class="fa-solid fa-pen-nib"></i> Brand Identity Setup</h2>
+          <p>Provide your brand details to generate custom vector logos.</p>
+        </div>
+
+        <form id="logoForm" onsubmit="return false;">
+          <!-- Brand Name -->
+          <div class="input-group">
+            <label for="brandName">Brand / Company Name <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-font field-icon"></i>
+              <input type="text" id="brandName" placeholder="e.g. Nexus Dynamics, Johny Waffle, Apex AI" required />
+            </div>
+          </div>
+
+          <!-- Description / Job -->
+          <div class="input-group">
+            <label for="description">What does your business do? / Logo description <span class="required">*</span></label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-briefcase field-icon"></i>
+              <textarea id="description" rows="3" placeholder="e.g. Modern gourmet waffle & coffee cafe. Warm, friendly vibe, minimalist syrup drip and coffee bean icon..." required></textarea>
+            </div>
+          </div>
+
+          <!-- Style Presets -->
+          <div class="input-group">
+            <label>Logo Design Style</label>
+            <div class="style-presets" id="stylePresets">
+              <button type="button" class="preset-chip active" data-style="minimalist">
+                <i class="fa-solid fa-shapes"></i> Minimalist
+              </button>
+              <button type="button" class="preset-chip" data-style="monogram">
+                <i class="fa-solid fa-signature"></i> Monogram
+              </button>
+              <button type="button" class="preset-chip" data-style="cybertech">
+                <i class="fa-solid fa-microchip"></i> Cyber/Tech
+              </button>
+              <button type="button" class="preset-chip" data-style="luxury">
+                <i class="fa-solid fa-crown"></i> Luxury
+              </button>
+              <button type="button" class="preset-chip" data-style="abstract">
+                <i class="fa-solid fa-circle-nodes"></i> Abstract Vector
+              </button>
+              <button type="button" class="preset-chip" data-style="mascot">
+                <i class="fa-solid fa-cat"></i> Mascot
+              </button>
+              <button type="button" class="preset-chip" data-style="vintage">
+                <i class="fa-solid fa-stamp"></i> Vintage Emblem
+              </button>
+              <button type="button" class="preset-chip" data-style="3d_clay">
+                <i class="fa-solid fa-cube"></i> 3D Render
+              </button>
+            </div>
+          </div>
+
+          <!-- Color Palette Picker -->
+          <div class="input-group">
+            <label for="colorPalette">Color Palette</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-palette field-icon"></i>
+              <input type="text" id="colorPalette" value="Electric Violet, Cyan & Obsidian Dark" placeholder="e.g. Gold & Black, Pastel Teal, Neon Cyberpunk" />
+            </div>
+            <div class="color-tags" id="colorQuickTags">
+              <span class="tag-chip" data-color="Luxury Gold & Black">Gold & Black</span>
+              <span class="tag-chip" data-color="Vibrant Neon Gradient">Neon Gradient</span>
+              <span class="tag-chip" data-color="Corporate Sapphire Blue">Sapphire Blue</span>
+              <span class="tag-chip" data-color="Warm Sunset Gold & Orange">Sunset Orange</span>
+              <span class="tag-chip" data-color="Monochrome Minimalist Black/White">Black & White</span>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="form-actions">
+            <button type="button" id="sparkIdeasBtn" class="btn btn-secondary btn-glow">
+              <i class="fa-solid fa-lightbulb"></i> GPT Design Spark Ideas
+            </button>
+            <button type="button" id="generateLogoBtn" class="btn btn-primary btn-glow">
+              <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Logo with GPT Image
+            </button>
+          </div>
+
+          <!-- Advanced Quality Option -->
+          <div class="advanced-options">
+            <label><i class="fa-solid fa-sliders"></i> Image Quality:</label>
+            <select id="qualitySelect">
+              <option value="high" selected>High Quality (Best)</option>
+              <option value="medium">Medium Quality (Balanced)</option>
+              <option value="low">Low Quality (Fast)</option>
+            </select>
+            <label style="margin-left:12px;"><i class="fa-solid fa-eye-dropper"></i> Background:</label>
+            <select id="bgSelect">
+              <option value="transparent" selected>Transparent (PNG)</option>
+              <option value="opaque">Opaque White</option>
+              <option value="auto">Auto</option>
+            </select>
+          </div>
+        </form>
+      </section>
+
+      <!-- Right Panel: Preview & Studio Stage -->
+      <section class="studio-panel glass-card">
+        <!-- GPT Ideas Drawer (Collapsible) -->
+        <div id="ideasContainer" class="ideas-container hidden">
+          <div class="ideas-header">
+            <h3><i class="fa-solid fa-brain"></i> AI Creative Concepts (GPT-4)</h3>
+            <button id="closeIdeasBtn" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
+          </div>
+          <p class="sub-text">Click any concept card below to apply its prompt directly to DALL-E 3!</p>
+          <div id="ideasGrid" class="ideas-grid"></div>
+        </div>
+
+        <!-- Main Display Canvas -->
+        <div class="display-stage">
+          <div class="stage-tabs">
+            <button class="stage-tab active" data-view="logo"><i class="fa-solid fa-vector-square"></i> Logo View</button>
+            <button class="stage-tab" data-view="dark"><i class="fa-solid fa-moon"></i> Dark Theme</button>
+            <button class="stage-tab" data-view="card"><i class="fa-solid fa-address-card"></i> Business Card</button>
+            <button class="stage-tab" data-view="tshirt"><i class="fa-solid fa-shirt"></i> T-Shirt Mockup</button>
+          </div>
+
+          <div class="stage-viewport" id="stageViewport">
+            <!-- Empty State -->
+            <div id="emptyState" class="empty-state">
+              <div class="empty-icon">
+                <i class="fa-solid fa-compass-drafting"></i>
+              </div>
+              <h3>Your AI Logo Will Appear Here</h3>
+              <p>Enter your brand details on the left and click <strong>"Generate Logo"</strong> or <strong>"GPT Spark Ideas"</strong> to begin. Powered by <strong>gpt-image-1</strong>.</p>
+            </div>
+
+            <!-- Loader State -->
+            <div id="loaderState" class="loader-state hidden">
+              <div class="spinner-ring"></div>
+              <h3 id="loaderTitle">Crafting Vector Artwork...</h3>
+              <p id="loaderSubtitle">AI is combining typography, geometry, and color harmony</p>
+              <div class="tip-carousel">
+                <i class="fa-solid fa-quote-left"></i> <span id="tipText">DALL-E 3 produces crisp, high-contrast flat vector icon logos tailored for modern branding.</span>
+              </div>
+            </div>
+
+            <!-- Generated Result State -->
+            <div id="resultState" class="result-state hidden">
+              <!-- Render Container -->
+              <div id="mockupContainer" class="mockup-frame logo-mode">
+                <img id="logoImage" src="" alt="Generated AI Logo" />
+                <div class="mockup-overlay" id="mockupOverlay"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Control Bar when Logo is generated -->
+          <div id="resultActions" class="result-actions hidden">
+            <button id="downloadBtn" class="btn btn-success">
+              <i class="fa-solid fa-download"></i> Download PNG
+            </button>
+            <button id="copyPromptBtn" class="btn btn-glass">
+              <i class="fa-solid fa-copy"></i> Copy DALL-E Prompt
+            </button>
+            <button id="toggleBgBtn" class="btn btn-glass">
+              <i class="fa-solid fa-circle-half-stroke"></i> Toggle Canvas Tint
+            </button>
+            <button id="regenerateBtn" class="btn btn-glass">
+              <i class="fa-solid fa-rotate-right"></i> Regenerate
+            </button>
+          </div>
+        </div>
+
+        <!-- Prompt Inspector Panel -->
+        <div id="promptInspector" class="prompt-inspector hidden">
+          <div class="inspector-header">
+            <h4><i class="fa-solid fa-code"></i> Active DALL-E 3 Prompt & Concept</h4>
+          </div>
+          <textarea id="promptText" rows="3"></textarea>
+          <div class="inspector-footer">
+            <small id="revisedPromptNotice"><i class="fa-solid fa-info-circle"></i> Prompt optimized automatically for flat vector geometry.</small>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- History Drawer Modal -->
+    <div id="historyDrawer" class="history-modal hidden">
+      <div class="modal-content glass-card">
+        <div class="modal-header">
+          <h3><i class="fa-solid fa-clock-rotate-left"></i> Previously Generated Logos</h3>
+          <button id="closeHistoryBtn" class="btn-icon"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="historyGrid" class="history-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>

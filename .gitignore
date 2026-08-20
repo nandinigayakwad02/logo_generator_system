@@ -1,0 +1,8 @@
+.env
+.venv/
+__pycache__/
+generated_logos/*.png
+generated_logos/*.jpg
+generated_logos/*.svg
+generated_logos/*.json
+!generated_logos/.gitkeep
